@@ -1,7 +1,7 @@
 {
   "name": "@chathuranga/marketplace-js-sdk",
-  "version": "0.2.0",
-  "description": "Holaplex Marketplace Standard Actions for the Metaplex Auction House program",
+  "version": "0.2.4",
+  "description": "Metaplex Marketplace Standard Actions for the Metaplex Auction House program",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "files": [
@@ -13,19 +13,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/holaplex/marketplace-js-sdk.git"
+    "url": "git+https://github.com/drunkencub/marketplace-js-sdk.git"
   },
   "keywords": [
     "solana",
     "metaplex",
-    "holaplex"
+    "karmaverse"
   ],
-  "author": "Holaplex Engineering <hola@holaplex.com>",
+  "author": "Chathuranga Bandara <contact@chathuranga.com>",
   "license": "AGPL-3.0-only",
   "bugs": {
-    "url": "https://github.com/holaplex/marketplace-js-sdk/issues"
+    "url": "https://github.com/drunkencub/marketplace-js-sdk/issues"
   },
-  "homepage": "https://github.com/holaplex/marketplace-js-sdk#readme",
+  "homepage": "https://github.com/drunkencub/marketplace-js-sdk#readme",
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",

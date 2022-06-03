@@ -1,6 +1,7 @@
 import { AuctionHouseProgram } from "@metaplex-foundation/mpl-auction-house";
 import {
   SYSVAR_INSTRUCTIONS_PUBKEY,
+  LAMPORTS_PER_SOL,
   PublicKey,
   Transaction,
   Connection,
@@ -51,12 +52,12 @@ export class ListingsClient extends Client {
     this.auctionHouse = auctionHouse;
   }
 
-  async post({ amount, nft }: PostListingParams): Promise<string> {
+  async post({ amount, nft }: PostListingParams): Promise<any> {
     const { publicKey, signTransaction } = this.wallet;
     const connection = this.connection;
     const ah = this.auctionHouse;
 
-    const buyerPrice = amount;
+    const buyerPrice = amount * LAMPORTS_PER_SOL;
     const auctionHouse = new PublicKey(ah.address);
     const authority = new PublicKey(ah.authority);
     const auctionHouseFeeAccount = new PublicKey(ah.auctionHouseFeeAccount);
@@ -145,7 +146,11 @@ export class ListingsClient extends Client {
 
     await connection.confirmTransaction(signature, "confirmed");
 
-    return receipt.toBase58();
+    return {
+      sellerTradeState: sellerTradeState.toBase58(),
+      receipt: receipt.toBase58(),
+      freeTradeState: freeTradeState.toBase58(),
+    };
   }
 
   async cancel({ listing, nft }: CancelListingParams) {
