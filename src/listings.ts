@@ -51,7 +51,7 @@ export class ListingsClient extends Client {
     this.auctionHouse = auctionHouse;
   }
 
-  async post({ amount, nft }: PostListingParams): Promise<void> {
+  async post({ amount, nft }: PostListingParams): Promise<string> {
     const { publicKey, signTransaction } = this.wallet;
     const connection = this.connection;
     const ah = this.auctionHouse;
@@ -145,7 +145,7 @@ export class ListingsClient extends Client {
 
     await connection.confirmTransaction(signature, "confirmed");
 
-    return receipt;
+    return receipt.toBase58();
   }
 
   async cancel({ listing, nft }: CancelListingParams) {

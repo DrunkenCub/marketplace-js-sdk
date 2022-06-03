@@ -55,7 +55,7 @@ export class OffersClient extends Client {
     this.auctionHouse = auctionHouse;
   }
 
-  async make({ amount, nft }: MakeOfferParams) {
+  async make({ amount, nft }: MakeOfferParams): Promise<string> {
     const { publicKey, signTransaction } = this.wallet;
     const connection = this.connection;
     const ah = this.auctionHouse;
@@ -156,7 +156,7 @@ export class OffersClient extends Client {
 
     await connection.confirmTransaction(signature, "confirmed");
 
-    return receipt;
+    return receipt.toBase58();
   }
 
   async cancel({ nft, offer }: CancelOfferParams) {
