@@ -155,6 +155,8 @@ export class OffersClient extends Client {
     const signature = await connection.sendRawTransaction(signed.serialize());
 
     await connection.confirmTransaction(signature, "confirmed");
+
+    return receipt;
   }
 
   async cancel({ nft, offer }: CancelOfferParams) {
