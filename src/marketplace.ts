@@ -47,63 +47,63 @@ export class MarketplaceClient extends Client {
     if (txtId) await connection.confirmTransaction(txtId);
   }
 
-  // async update(
-  //   settings: MarktplaceSettingsPayload,
-  //   transactionFee: number
-  // ): Promise<void> {
-  //   const wallet = this.wallet;
-  //   const publicKey = wallet.publicKey as PublicKey;
-  //   const connection = this.connection;
+  async update(
+    settings: MarktplaceSettingsPayload,
+    transactionFee: number
+  ): Promise<void> {
+    const wallet = this.wallet;
+    const publicKey = wallet.publicKey as PublicKey;
+    const connection = this.connection;
 
-  //   const storePubkey = await Store.getPDA(publicKey);
-  //   const storeConfigPubkey = await StoreConfig.getPDA(storePubkey);
+    const storePubkey = await Store.getPDA(publicKey);
+    const storeConfigPubkey = await StoreConfig.getPDA(storePubkey);
 
-  //   settings.address.store = storePubkey.toBase58();
-  //   settings.address.storeConfig = storeConfigPubkey.toBase58();
-  //   settings.address.owner = publicKey.toBase58();
+    settings.address.store = storePubkey.toBase58();
+    settings.address.storeConfig = storeConfigPubkey.toBase58();
+    settings.address.owner = publicKey.toBase58();
 
-  //   const storefrontSettings = new File(
-  //     [JSON.stringify(settings)],
-  //     "storefront_settings"
-  //   );
-  //   const { uri } = await ipfsSDK.uploadFile(storefrontSettings);
+    const storefrontSettings = new File(
+      [JSON.stringify(settings)],
+      "storefront_settings"
+    );
+    const { uri } = await ipfsSDK.uploadFile(storefrontSettings);
 
-  //   const auctionHouseUpdateInstruction = await updateAuctionHouse({
-  //     wallet: wallet as Wallet,
-  //     sellerFeeBasisPoints: transactionFee,
-  //   });
+    const auctionHouseUpdateInstruction = await updateAuctionHouse({
+      wallet: wallet as Wallet,
+      sellerFeeBasisPoints: transactionFee,
+    });
 
-  //   const setStorefrontV2Instructions = new SetStoreV2(
-  //     {
-  //       feePayer: publicKey,
-  //     },
-  //     {
-  //       admin: publicKey,
-  //       store: storePubkey,
-  //       config: storeConfigPubkey,
-  //       isPublic: false,
-  //       settingsUri: uri,
-  //     }
-  //   );
-  //   const transaction = new Transaction();
+    const setStorefrontV2Instructions = new SetStoreV2(
+      {
+        feePayer: publicKey,
+      },
+      {
+        admin: publicKey,
+        store: storePubkey,
+        config: storeConfigPubkey,
+        isPublic: false,
+        settingsUri: uri,
+      }
+    );
+    const transaction = new Transaction();
 
-  //   if (auctionHouseUpdateInstruction) {
-  //     transaction.add(auctionHouseUpdateInstruction);
-  //   }
+    if (auctionHouseUpdateInstruction) {
+      transaction.add(auctionHouseUpdateInstruction);
+    }
 
-  //   transaction.add(setStorefrontV2Instructions);
-  //   transaction.feePayer = publicKey;
-  //   transaction.recentBlockhash = (
-  //     await connection.getLatestBlockhash()
-  //   ).blockhash;
+    transaction.add(setStorefrontV2Instructions);
+    transaction.feePayer = publicKey;
+    transaction.recentBlockhash = (
+      await connection.getLatestBlockhash()
+    ).blockhash;
 
-  //   const signedTransaction = await wallet.signTransaction(transaction);
-  //   const txtId = await connection.sendRawTransaction(
-  //     signedTransaction.serialize()
-  //   );
+    const signedTransaction = await wallet.signTransaction(transaction);
+    const txtId = await connection.sendRawTransaction(
+      signedTransaction.serialize()
+    );
 
-  //   if (txtId) await connection.confirmTransaction(txtId, "confirmed");
-  // }
+    if (txtId) await connection.confirmTransaction(txtId, "confirmed");
+  }
 
   offers(auctionHouse: AuctionHouse): OffersClient {
     return new OffersClient(this.connection, this.wallet, auctionHouse);
