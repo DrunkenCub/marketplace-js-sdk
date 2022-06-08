@@ -6,6 +6,7 @@ import ipfsSDK from "./ipfs";
 import { Client } from "./client";
 import { OffersClient } from "./offers";
 import { ListingsClient } from "./listings";
+import { TreasuryClient } from "./treasury";
 
 const {
   metaplex: { Store, SetStoreV2, StoreConfig },
@@ -138,6 +139,10 @@ export class MarketplaceClient extends Client {
 
   listings(auctionHouse: AuctionHouse): ListingsClient {
     return new ListingsClient(this.connection, this.wallet, auctionHouse);
+  }
+
+  treasury(auctionHouse: AuctionHouse): TreasuryClient {
+    return new TreasuryClient(this.connection, this.wallet, auctionHouse);
   }
 }
 
