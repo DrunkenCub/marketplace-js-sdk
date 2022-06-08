@@ -1,6 +1,6 @@
 {
   "name": "@chathuranga/marketplace-js-sdk",
-  "version": "0.2.4",
+  "version": "0.2.7",
   "description": "Metaplex Marketplace Standard Actions for the Metaplex Auction House program",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
